@@ -2,7 +2,7 @@ import requests
 import json
 
 class Assignment:
-	
+
 	'''
 	Fields:
 	username - the owner of the repository
@@ -10,29 +10,35 @@ class Assignment:
 	dec - a json decoder
 	repo - the json object of the repo
 	'''
-	
+
 	def __init__(self, username, repoName):
 		self.username = username
 		self.repoName = repoName
 		self.dec = json.JSONDecoder()
-		
+
 		#get the json object for the user info
 		self.repo = self.dec.decode(requests.get('https://api.github.com/', auth=(username, '')).text)
 		#get the json object for the repository
 		self.repo = self.dec.decode(requests.get(self.repo["repository_url"].replace("{owner}", username).replace("{repo}", repoName), "").text)
-		
+
 		#later: error handling?
-		
-	#returns a list of all commits for the repository
+
+	#returns a list of all commits with all accompanying information for the repository
 	def getCommitList(self):
 		c = self.repo["commits_url"].replace("{/sha}", "")
 		c = requests.get(c, "")
 		return self.dec.decode(c.text)
-	
+
+	def getCommitListMessages(self):
+		cL = self.getCommitList()
+		for e in cL:
+			print (e["commit"]["message"])
+
+
 	#returns the total number of commits for the assignment repo
 	def getNumberOfCommits(self):
 		return len(self.getCommitList())
-	
+
 	#returns a list containing the dates of each commit
 	def getDatesOfCommits(self):
 		li = []
@@ -48,5 +54,7 @@ class Assignment:
 	def statusMessage(self):
 		pass
 
-a = Assignment('jennyafish', 'PrintStarsHW')
+a = Assignment('agianchandani2018', 'PrintNumbersRecursive')
 print(a.getDatesOfCommits())
+print(a.getNumberOfCommits())
+print(a.getCommitListMessages())
