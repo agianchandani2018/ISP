@@ -9,6 +9,8 @@ class Assignment:
 	repoName - the name of the repository to fetch info on
 	dec - a json decoder
 	repo - the json object of the repo
+	
+	**fix later: time zones
 	'''
 
 	def __init__(self, username, repoName):
@@ -49,14 +51,24 @@ class Assignment:
 		return li
 
 	#returns the number of commits between two given dates
+	#form is yyyy-mm-ddThh:mm:ssZ
+	#!these times do not line up: probably in different time zone, about 4 hours ahead of actual
 	def numCommitsDateRange(self, startDate, endDate):
-		pass
+		c = 0
+		for d in self.getDatesOfCommits():
+			if(d >= startDate and d <= endDate):
+				c += 1
+		return c
 
-	# returns a string that indicates if the student is up to date, behind, etc
+	#returns a string that indicates if the student is up to date, behind, etc
 	def statusMessage(self):
 		pass
+		
+	
+	
 
 a = Assignment('agianchandani2018', 'ISP')
 print(a.getDatesOfCommits())
 print(a.getNumberOfCommits())
 print(a.getCommitListMessages())
+print(a.numCommitsDateRange("2018-05-15T00:00:00Z", "2018-05-16T00:00:00Z"))

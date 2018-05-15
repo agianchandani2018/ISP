@@ -14,3 +14,4 @@ Flask - python/HTML interaction
 Teacher Assignment Creation
 - HTML/javascript
 
+[Integration Outline Google Doc](https://docs.google.com/document/d/18rlLBixBy4v_k2UCaJfA9dEGO6ejslnkyMPTTGgFZvY/edit)
