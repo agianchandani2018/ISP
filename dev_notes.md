@@ -16,6 +16,13 @@ Teacher Assignment Creation
 
 Teacher Form To Do
 [X] Deadline Table
-[ ] Submit info
+[ ] Submit info - JSON?
+	[ ] add checkpoints list
+	[ ] uhhh do something with the JSON eventually
+[ ] Disable auto pull requests if not an assignment
+[ ] By default make the last checkpoint the deadline
+[ ] Aid cumulative commit count input
+[ ] Make minimum deadline date = current date
+[ ] Settings for sharing info (TA/instructor github accounts)?
 
 [Integration Outline Google Doc](https://docs.google.com/document/d/18rlLBixBy4v_k2UCaJfA9dEGO6ejslnkyMPTTGgFZvY/edit)

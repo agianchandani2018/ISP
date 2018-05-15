@@ -17,6 +17,8 @@
 		make settings options for defaults/sharing
 		React?
 		so we'll create a teacher app for this
+		disable pull requests if not assignment
+		default last checkpoint = deadline
 	-->
 	
 	<form id="create"><!-- action="/action_page.php" method="post"-->
@@ -25,11 +27,11 @@
 			Assignment Title: <input type="text" name="title"><br>
 			Link to Starter Repo on GitHub: <input type="text" name="link"><br>
 			Sharing Permissions: <br>
-				<input type="radio" name="share" value="all" checked> Share with everyone (instructor + TAs)<br>
-				<input type="radio" name="share" value="me"> Share only with me (instructor)<br>
-			Enable Auto Pull Request?* <input type="radio" name="pullreq" value=1> yes <input type="radio" name="pullreq" value=0 checked> no<br>
+				<input type="radio" name="share" value="true" checked> Share with everyone (instructor + TAs)<br>
+				<input type="radio" name="share" value="false"> Share only with me (instructor)<br>
+			Enable Auto Pull Request?* <input type="radio" name="pullreq" value="true"> yes <input type="radio" name="pullreq" value="false" checked> no<br>
 			<div class="exp">*auto pull requests will automatically create a pull request on the deadline date regardless of student submission status</div>
-			Assignment or Notes? <input type="radio" onclick="{enableDeadlines()}" name="note" value="1" checked> Assignment <input type="radio" onclick="{disableDeadlines()}" name="note" value="0"> Notes<br>
+			Assignment or Notes? <input type="radio" onclick="{enableDeadlines()}" name="note" value="true" checked> Assignment <input type="radio" onclick="{disableDeadlines()}" name="note" value="false"> Notes<br>
 		</fieldset>
 		
 		<br>
