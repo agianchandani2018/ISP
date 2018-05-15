@@ -31,8 +31,10 @@ class Assignment:
 
 	def getCommitListMessages(self):
 		cL = self.getCommitList()
+		list = []
 		for e in cL:
-			print (e["commit"]["message"])
+			list.append(e["commit"]["message"])
+		return list	
 
 
 	#returns the total number of commits for the assignment repo
@@ -54,7 +56,7 @@ class Assignment:
 	def statusMessage(self):
 		pass
 
-a = Assignment('agianchandani2018', 'PrintNumbersRecursive')
+a = Assignment('agianchandani2018', 'ISP')
 print(a.getDatesOfCommits())
 print(a.getNumberOfCommits())
 print(a.getCommitListMessages())
