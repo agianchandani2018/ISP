@@ -37,7 +37,7 @@ print (date)
 for k in dictionary:
      print(k["sha"])
 
-print (len(dictionary))     
+print (len(dictionary))
 
 #https://api.github.com/users/agianchandani2018/repos{?type,page,per_page,sort}
 
