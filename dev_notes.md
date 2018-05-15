@@ -14,4 +14,8 @@ Flask - python/HTML interaction
 Teacher Assignment Creation
 - HTML/javascript
 
+Teacher Form To Do
+[X] Deadline Table
+[ ] Submit info
+
 [Integration Outline Google Doc](https://docs.google.com/document/d/18rlLBixBy4v_k2UCaJfA9dEGO6ejslnkyMPTTGgFZvY/edit)
