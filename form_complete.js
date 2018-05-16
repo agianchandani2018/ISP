@@ -2,8 +2,8 @@
 var form = document.getElementById("create");
 form.addEventListener("submit", function(event){
 	event.preventDefault();
-	create = document.getElementById("create");
-	r = {
+	var create = document.getElementById("create");
+	var r = {
 		title: create.title,
 		repo_link: create.link,
 		share_permissions: getRadio("share"),
@@ -11,15 +11,15 @@ form.addEventListener("submit", function(event){
 		is_assignment: getRadio("note"),
 		
 		deadline: create.deadline,
-		checkpoints: [] //implement this
+		checkpoints: []
 	}
 	
-	for(var row=0; row < document.getElementById("checkpoints"); row++){
-		//r.checkpoints.push({name: create.n0})
+	for(var row=0; row < document.getElementById("checkpoints").rows.length-1; row++){
+		r.checkpoints.push({name: document.getElementById("n"+row).value, date: document.getElementById("d"+row).value, num_commits: document.getElementById("nc"+row).value});
 	}
 	
 	window.alert(JSON.stringify(r));
-	
+	//and then we'll send this somewhere
 	
 	
 });
@@ -46,6 +46,6 @@ function changeTable(){
 	t = document.getElementById("checkpoints");
 	t.innerHTML = "<tr><th>Name (optional)</th><th>Date</th><th>Number of Commits</th></tr>"; //clears content
 	for(var i=0; i<document.getElementById("numcheck").value; i++){
-		t.innerHTML += "<tr><td><input type=\"text\" name=\"n" + i + "\"></td><td><input name=\"d" + i +"\" type=\"date\"></td><td><input name=\"nc"+i+"\" type=\"number\" min=\"0\"></td></tr>";
+		t.innerHTML += "<tr><td><input type=\"text\" id=\"n" + i + "\"></td><td><input id=\"d" + i +"\" type=\"date\"></td><td><input id=\"nc"+i+"\" type=\"number\" min=\"0\"></td></tr>";
 	}
 }

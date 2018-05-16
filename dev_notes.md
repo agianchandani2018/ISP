@@ -17,7 +17,7 @@ Teacher Assignment Creation
 Teacher Form To Do
 - [X] Deadline Table
 - [ ] Submit info - JSON?
-	- [ ] add checkpoints list
+	- [X] add checkpoints list
 	- [ ] uhhh do something with the JSON eventually
 - [ ] Disable auto pull requests if not an assignment
 - [ ] By default make the last checkpoint the deadline
