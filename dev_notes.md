@@ -24,5 +24,6 @@ Teacher Form To Do
 - [ ] Aid cumulative commit count input
 - [ ] Make minimum deadline date = current date
 - [ ] Settings for sharing info (TA/instructor github accounts)?
+- [ ] After submit, notify if link was invalid
 
 [Integration Outline Google Doc](https://docs.google.com/document/d/18rlLBixBy4v_k2UCaJfA9dEGO6ejslnkyMPTTGgFZvY/edit)
