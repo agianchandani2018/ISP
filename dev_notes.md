@@ -26,10 +26,14 @@ Teacher Form To Do
 - [ ] Settings for sharing info (TA/instructor github accounts)?
 - [ ] After submit, notify if link was invalid
 
+**MAKE GRAPHS**
+
 [Integration Outline Google Doc](https://docs.google.com/document/d/18rlLBixBy4v_k2UCaJfA9dEGO6ejslnkyMPTTGgFZvY/edit)
 
 [Creating Packages in Flask](http://flask.pocoo.org/docs/0.12/patterns/packages/)
 
 [Flask Quickstart](http://flask.pocoo.org/docs/1.0/quickstart/#quickstart)
 
+[requests-oauthlib](https://github.com/requests/requests-oauthlib)
 
+[schoolopy](https://github.com/ErikBoesen/schoolopy)

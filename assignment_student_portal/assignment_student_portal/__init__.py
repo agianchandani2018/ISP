@@ -25,7 +25,11 @@ import assignment_student_portal.create_github
 import assignment_student_portal.create_schoology
 import assignment_student_portal.render_student
 
+@app.route('/')
+def hello():
+	return render_student.index()
 
+'''
 @app.route('/student/<username>')
 def show_assigment_portal(username):
 	return "portal created for %" % username
@@ -41,3 +45,4 @@ def auth():
 @app.route('/student/<username>')
 def render_asp(username=None):
 	return render_template('asp_student.html', username=username) #for this, pass in dict with user's info
+	'''
