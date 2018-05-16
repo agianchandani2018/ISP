@@ -1,6 +1,7 @@
 
 var form = document.getElementById("create");
 form.addEventListener("submit", function(event){
+	//use preventDefault for testing
 	event.preventDefault();
 	var create = document.getElementById("create");
 	var r = {
@@ -21,6 +22,20 @@ form.addEventListener("submit", function(event){
 	window.alert(JSON.stringify(r));
 	//and then we'll send this somewhere
 	
+	$.ajax({
+		url: "http://",//put something here, depending on where we're sending it
+		type: 'PUT',
+		data: JSON.stringify(r),
+		contentType: 'application/json',
+		success: function(result){
+			alert("success?");
+		}
+	});
+	/*
+	var xhr = new XMLHttpRequest();
+	xhr.open('PUT', "", true); //what link to put here???
+	xhr.send();
+	*/
 	
 });
 

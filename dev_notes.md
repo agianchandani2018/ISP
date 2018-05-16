@@ -18,7 +18,7 @@ Teacher Form To Do
 - [X] Deadline Table
 - [ ] Submit info - JSON?
 	- [X] add checkpoints list
-	- [ ] uhhh do something with the JSON eventually
+	- [ ] figure out using jQuery/ajax to send json object to server
 - [ ] Disable auto pull requests if not an assignment
 - [ ] By default make the last checkpoint the deadline
 - [ ] Aid cumulative commit count input
