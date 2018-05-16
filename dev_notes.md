@@ -27,3 +27,9 @@ Teacher Form To Do
 - [ ] After submit, notify if link was invalid
 
 [Integration Outline Google Doc](https://docs.google.com/document/d/18rlLBixBy4v_k2UCaJfA9dEGO6ejslnkyMPTTGgFZvY/edit)
+
+[Creating Packages in Flask](http://flask.pocoo.org/docs/0.12/patterns/packages/)
+
+[Flask Quickstart](http://flask.pocoo.org/docs/1.0/quickstart/#quickstart)
+
+
