@@ -1,6 +1,8 @@
 from flask import Flask
 from flask import request
 
+import webbrowser as wb
+
 #host student page
 #make a package
 '''
@@ -24,11 +26,44 @@ app = Flask(__name__)
 import assignment_student_portal.create_github
 import assignment_student_portal.create_schoology
 import assignment_student_portal.render_student
+import assignment_student_portal.authenticate
 
+#authenticates user upon connection
 @app.route('/')
-def hello():
-	return render_student.index()
+def testAuth():
+	with open('assignment_student_portal/schoology_api_keys.txt', 'r') as f:
+		cfg = f.readlines()
 
+	DOMAIN = 'https://pingry.schoology.com'
+	
+	auth = authenticate.Auth(cfg[0][:-1], cfg[1], domain=DOMAIN, three_legged=True)
+	url = auth.request_authorization()
+	
+	if url is not None:
+		wb.open(url, new=2)
+	
+	#we want to replace this eventually
+	raw_input('Press enter when ready.')
+	
+	if not auth.authorize():
+		raise SystemExit('account was not authorized.')
+
+	#at this point we have obtained the necessary tokens
+	
+	#next steps: redirect back to user page
+	
+	return("it worked!")
+	
+@app.route('/<user>')
+def foo_bar():
+	pass
+'''
+upon authentication:
+- open new tab
+- close tab
+redirect to user page
+'''
+	
 '''
 @app.route('/student/<username>')
 def show_assigment_portal(username):
