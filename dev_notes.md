@@ -10,6 +10,7 @@ when assignment created, make a Schoology assignment for each student, and embed
 
 Flask - python/HTML interaction
 
+*the more to do lists i make the emptier i feel inside*
 
 Teacher Assignment Creation
 - HTML/javascript

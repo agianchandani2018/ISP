@@ -1,5 +1,4 @@
-from flask import Flask
-from flask import request
+from flask import Flask, request, redirect, url_for, render_template
 
 import webbrowser as wb
 
@@ -23,18 +22,19 @@ Later
 app = Flask(__name__)
 
 #import other files
-import assignment_student_portal.create_github
-import assignment_student_portal.create_schoology
-import assignment_student_portal.render_student
-import assignment_student_portal.authenticate
+import assignment_student_portal.create_github #clone repo on creation
+import assignment_student_portal.create_schoology #create assignment on creation
+import assignment_student_portal.render_student #pull info for rendering
+import assignment_student_portal.authenticate #schoolopy auth
 
 #authenticates user upon connection
 @app.route('/')
-def testAuth():
+def index():
 	with open('assignment_student_portal/schoology_api_keys.txt', 'r') as f:
 		cfg = f.readlines()
 
-	DOMAIN = 'https://pingry.schoology.com'
+	#DOMAIN = 'https://pingry.schoology.com'
+	DOMAIN = #app.route
 	
 	auth = authenticate.Auth(cfg[0][:-1], cfg[1], domain=DOMAIN, three_legged=True)
 	url = auth.request_authorization()
@@ -51,12 +51,33 @@ def testAuth():
 	#at this point we have obtained the necessary tokens
 	
 	#next steps: redirect back to user page
+	#return redirect(url_for(userpage))
 	
 	return("it worked!")
 	
 @app.route('/<user>')
-def foo_bar():
+def user_status_check(user):
+	#if user is admin
+		#return render_admin_portal()
+	#else
+		#return render_student.render_student_portal()
 	pass
+	
+@app.route('/<user>/create', methods['GET', 'POST'])
+def create_assignment(user):
+	if request.method == 'POST':
+		#run all the stuff to create assignment
+		#attempt to access github repo, clone repo, and make assignments
+		#make comprehensive error message here
+		#if create_github. == None:
+			#return ""
+		#create schoology assignment
+		#create_schoology.
+		return "Form submitted successfully."
+	else: #request.method == 'GET'
+		return render_template('create_assignment.html') #later: add default fill info
+	
+
 '''
 upon authentication:
 - open new tab
@@ -73,7 +94,9 @@ def show_assigment_portal(username):
 @app.route('/auth', methods=['GET', 'POST'])
 def auth():
 	if request.method == 'POST': #
-		return some_method()
+		return put_in_db_i_guess()
+	elif request.method == 'GET':
+		return render_asp() #or something
 	else:
 		return some_other_method()
 	

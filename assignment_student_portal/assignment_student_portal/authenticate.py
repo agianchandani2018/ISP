@@ -78,7 +78,7 @@ class Auth:
             self.request_token = fetch_response.get('oauth_token')
             self.request_token_secret = fetch_response.get('oauth_token_secret')
 
-        base_authorization_url = self.DOMAIN_ROOT + '/oauth/authorize'
+        base_authorization_url = 'https://pingry.schoology.com' + '/oauth/authorize'
         return self.oauth.authorization_url(base_authorization_url, request_token=self.request_token) + '&' + urlencode({'oauth_callback': self.DOMAIN_ROOT})
 
     def authorize(self):
