@@ -35,6 +35,8 @@ auth = None #make globally accessible Auth instance
 #authenticates user upon connection
 @app.route('/')
 def index():
+	#check for access tokens here?
+
 	with open('assignment_student_portal/schoology_api_keys.txt', 'r') as f:
 		cfg = f.readlines()
 
@@ -67,16 +69,17 @@ def finish_auth():
 	if not auth.authorize(): 
 		raise SystemExit('account was not authorized.')
 	
-	print main.Schoology(auth).get_me().uid
-	return "success"
+	return redirect(url_for('user_status_check', user=main.Schoology(auth).get_me().uid))
+	#at some point we need to store access tokens
+	
 	
 @app.route('/<user>')
 def user_status_check(user):
 	#if user is admin
 		#return render_admin_portal()
 	#else
-		#return render_student.render_student_portal()
-	pass
+	return render_student.render_student_portal(main.Schoology(auth))
+	#return "made it to " + user
 	
 @app.route('/<user>/create', methods=['GET', 'POST'])
 def create_assignment(user):

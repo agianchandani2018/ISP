@@ -1,8 +1,25 @@
 <html>
 <head>
-	<title>ASP</title>
+	<title>{{assignment_name}}</title>
+	<style>
+		.pending {color: gray}
+		.met {color: green}
+		.missed {color: red}
+	</style>
 </head>
 <body>
-
+	Checkpoint Status
+	<table id="checkpoints">
+	<th>{% if checkpoints[0].name != "" %}<td>Name</td>{% endif %}<td>Date</td><td>Commit Goal</td><td>Commits Reached</td></th>
+	{% for point in checkpoints %}
+		<!--assign class depending on commit status: pending, met, or missed-->
+		<tr class=
+			{% if point.commits >= point.commit_goal %}"met"
+			{% elif current_date < point.date %}"pending"
+			{% else %}"missed"
+			{% endif %}
+		>{% if point.name != "" %}<td>{{point.name}}</td>{% endif %}<td>{{point.date}}</td><td>{{point.commit_goal}}</td><td>{{point.commits}}</td></tr>
+	{% endfor %}
+	</table>
 </body>
 </html>
