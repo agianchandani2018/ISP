@@ -1,4 +1,4 @@
-from flask import Flask, request, redirect, url_for, render_template
+from flask import Flask, request, redirect, url_for, render_template, session
 
 import webbrowser as wb
 
@@ -21,11 +21,16 @@ Later
 
 app = Flask(__name__)
 
+
+
 #import other files
 import assignment_student_portal.create_github #clone repo on creation
 import assignment_student_portal.create_schoology #create assignment on creation
 import assignment_student_portal.render_student #pull info for rendering
 import assignment_student_portal.authenticate #schoolopy auth
+import assignment_student_portal.main #schoolopy api
+
+auth = None #make globally accessible Auth instance
 
 #authenticates user upon connection
 @app.route('/')
@@ -34,19 +39,20 @@ def index():
 		cfg = f.readlines()
 
 	#DOMAIN = 'https://pingry.schoology.com'
-	DOMAIN = #app.route
+	DOMAIN = url_for('finish_auth', _external=True)#app.route
 	
+	global auth
 	auth = authenticate.Auth(cfg[0][:-1], cfg[1], domain=DOMAIN, three_legged=True)
 	url = auth.request_authorization()
 	
 	if url is not None:
-		wb.open(url, new=2)
+		wb.open(url, new=0)
 	
 	#we want to replace this eventually
-	raw_input('Press enter when ready.')
+	#raw_input('Press enter when ready.')
 	
-	if not auth.authorize():
-		raise SystemExit('account was not authorized.')
+	#if not auth.authorize():
+		#raise SystemExit('account was not authorized.')
 
 	#at this point we have obtained the necessary tokens
 	
@@ -54,6 +60,15 @@ def index():
 	#return redirect(url_for(userpage))
 	
 	return("it worked!")
+	
+@app.route('/auth')
+def finish_auth():
+	global auth
+	if not auth.authorize(): 
+		raise SystemExit('account was not authorized.')
+	
+	print main.Schoology(auth).get_me().uid
+	return "success"
 	
 @app.route('/<user>')
 def user_status_check(user):
@@ -63,7 +78,7 @@ def user_status_check(user):
 		#return render_student.render_student_portal()
 	pass
 	
-@app.route('/<user>/create', methods['GET', 'POST'])
+@app.route('/<user>/create', methods=['GET', 'POST'])
 def create_assignment(user):
 	if request.method == 'POST':
 		#run all the stuff to create assignment
