@@ -1,4 +1,6 @@
 from flask import Flask, request, redirect, url_for, render_template, session
+from flask_pymongo import PyMongo
+
 
 import webbrowser as wb
 
@@ -20,8 +22,7 @@ Later
 '''
 
 app = Flask(__name__)
-
-
+mongo = PyMongo(app)
 
 #import other files
 import assignment_student_portal.create_github #clone repo on creation
@@ -35,7 +36,9 @@ auth = None #make globally accessible Auth instance
 #authenticates user upon connection
 @app.route('/')
 def index():
+	mongo.save_file('me', {'uid':"help"})
 	#check for access tokens here?
+	return mongo.find_one({'id':'notfound'})
 
 	with open('assignment_student_portal/schoology_api_keys.txt', 'r') as f:
 		cfg = f.readlines()
@@ -92,6 +95,7 @@ def create_assignment(user):
 		#create schoology assignment
 		#create_schoology.
 		return "Form submitted successfully."
+		#render a button to return to home page
 	else: #request.method == 'GET'
 		return render_template('create_assignment.html') #later: add default fill info
 	
