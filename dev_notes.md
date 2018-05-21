@@ -17,6 +17,7 @@ Teacher Assignment Creation
 
 Teacher Form To Do
 - [X] Deadline Table
+- [ ] course sections, make checkboxes for assigning
 - [ ] Submit info - JSON?
 	- [X] add checkpoints list
 	- [ ] figure out using jQuery/ajax to send json object to server
@@ -68,3 +69,5 @@ Database Attributes
 [requests-oauthlib](https://github.com/requests/requests-oauthlib)
 
 [schoolopy](https://github.com/ErikBoesen/schoolopy)
+
+[flask db demo](https://github.com/pallets/flask/blob/0.12.4/examples/flaskr/flaskr/flaskr.py)
