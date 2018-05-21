@@ -1,5 +1,6 @@
-from flask import Flask, request, redirect, url_for, render_template, session
-from flask_pymongo import PyMongo
+import os
+from flask import Flask, request, redirect, url_for, render_template, session, g
+from sqlite3 import dbapi2 as sqlite3
 
 
 import webbrowser as wb
@@ -12,7 +13,6 @@ To Do
 - create github repos
 - create schoology assignment
 - when requested, respond with student's asp
-- maybe make teacher page??? consider for later
 Later
 - when requested, modify settings for assignment info
 - database interaction for storing checkpoint info?
@@ -22,23 +22,65 @@ Later
 '''
 
 app = Flask(__name__)
-mongo = PyMongo(app)
+
 
 #import other files
 import assignment_student_portal.create_github #clone repo on creation
 import assignment_student_portal.create_schoology #create assignment on creation
 import assignment_student_portal.render_student #pull info for rendering
+import assignment_student_portal.render_admin #handle admin portal rendering
 import assignment_student_portal.authenticate #schoolopy auth
 import assignment_student_portal.main #schoolopy api
+
+#database stuff
+
+app.config.update(dict(
+	DATABASE=os.path.join(app.root_path, 'assignment_student_portal.db'),
+	DEBUG=True,
+	SECRET_KEY='development key',
+	USERNAME='admin',
+	PASSWORD='default'
+))
+app.config.from_envvar('ASP_SETTINGS', silent=True)
+
+
+def connect_db():
+	rv = sqlite3.connect(app.config['DATABASE'])
+	rv.row_factory = sqlite3.Row
+	return rv
+	
+def init_db():
+	db = get_db()
+	with app.open_resource('schema.sql', mode='r') as f:
+		db.cursor().executescript(f.read())
+	db.commit()
+	
+@app.cli.command('initdb')
+def initdb_command():
+	init_db()
+	print('initialized the database.')
+	
+def get_db():
+	if not hasattr(g, 'sqlite_db'):
+		g.sqlite_db = connect_db()
+	return g.sqlite_db
+	
+@app.teardown_appcontext
+def close_db(error):
+	if hasattr(g, 'sqlite_db'):
+		g.sqlite_db.close()
+
+
+
 
 auth = None #make globally accessible Auth instance
 
 #authenticates user upon connection
 @app.route('/')
 def index():
-	mongo.save_file('me', {'uid':"help"})
+	#mongo.save_file('me', {'uid':"help"})
 	#check for access tokens here?
-	return mongo.find_one({'id':'notfound'})
+	#return mongo.find_one({'id':'notfound'})
 
 	with open('assignment_student_portal/schoology_api_keys.txt', 'r') as f:
 		cfg = f.readlines()
@@ -63,6 +105,12 @@ def index():
 	
 	#next steps: redirect back to user page
 	#return redirect(url_for(userpage))
+	
+	db = get_db()
+	db.execute('insert into user (id, username, password) values (124, "jf", "pass")')
+	db.commit()
+	cur = db.execute('select id from user')
+	print cur.fetchall()
 	
 	return("it worked!")
 	
