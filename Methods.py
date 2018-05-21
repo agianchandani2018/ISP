@@ -9,7 +9,7 @@ class Assignment:
 	repoName - the name of the repository to fetch info on
 	dec - a json decoder
 	repo - the json object of the repo
-	
+
 	**fix later: time zones
 	'''
 
@@ -36,7 +36,7 @@ class Assignment:
 		list = []
 		for e in cL:
 			list.append(e["commit"]["message"])
-		return list	
+		return list
 
 
 	#returns the total number of commits for the assignment repo
@@ -63,12 +63,12 @@ class Assignment:
 	#returns a string that indicates if the student is up to date, behind, etc
 	def statusMessage(self):
 		pass
-		
-	
-	
 
-a = Assignment('agianchandani2018', 'ISP')
+
+
+
+a = Assignment('agianchandani2018', 'box-exercise-agianchandani2018')
 print(a.getDatesOfCommits())
 print(a.getNumberOfCommits())
 print(a.getCommitListMessages())
-print(a.numCommitsDateRange("2018-05-15T00:00:00Z", "2018-05-16T00:00:00Z"))
+#print(a.numCommitsDateRange("2018-05-15T00:00:00Z", "2018-05-16T00:00:00Z"))
