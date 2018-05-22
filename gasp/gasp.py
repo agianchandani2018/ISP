@@ -149,7 +149,7 @@ def user_status_check(user):
 	#else
 	#return render_student.render_student_portal(main.Schoology(auth))
 	#return "made it to " + user
-	return render_
+	return "made it to user " + user
 	
 @app.route('/<user>/create', methods=['GET', 'POST'])
 def create_assignment(user):
