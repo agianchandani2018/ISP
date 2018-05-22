@@ -162,3 +162,6 @@ def create_assignment(user):
 	else: #request.method == 'GET'
 		return render_template('create_assignment.html') #later: add default fill info
 	
+if __name__=='__main__':
+	app.run(debug=True,host="compsci-dev.pingry.k12.nj.us", port=443)
+#filezilla ssh protocol
