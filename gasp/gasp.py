@@ -165,5 +165,5 @@ def create_assignment(user):
 		return render_template('create_assignment.html') #later: add default fill info
 	
 if __name__=='__main__':
-	app.run(debug=True,host="compsci-dev.pingry.k12.nj.us", port=80)
+	app.run(debug=True,host="compsci-dev.pingry.k12.nj.us", port=1030)
 #filezilla ssh protocol
