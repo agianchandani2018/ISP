@@ -1,5 +1,5 @@
 import os
-from flask import Flask, request, redirect, url_for, render_template, session, g
+from flask import Flask, request, redirect, url_for, render_template, session, g, flash
 from sqlite3 import dbapi2 as sqlite3
 from flask_github import GitHub
 
@@ -93,6 +93,7 @@ def index():
 		#cfg = f.readlines()
 	cfg = [raw_input("key") + " ", raw_input("secret")]
 	
+	print(cfg)
 
 	DOMAIN = url_for('finish_auth', _external=True)#app.route
 	
@@ -102,8 +103,9 @@ def index():
 	
 	if url is not None:
 		wb.open(url, new=0)
+		return "successful url " + url
 	
-	return("it worked!")
+	return("bad url " + url)
 	
 #authorizes the user and redirects to the given url
 @app.route('/test')
