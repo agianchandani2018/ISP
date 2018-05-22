@@ -1,5 +1,5 @@
-from .models import *
-from .authenticate import AuthorizationError
+from models import *
+from authenticate import *
 import time
 import json
 

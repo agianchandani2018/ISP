@@ -5,6 +5,8 @@ from flask_github import GitHub
 
 import webbrowser as wb
 
+import authenticate, main
+
 #host student page
 #make a package
 '''

@@ -1,4 +1,4 @@
-from assignment_student_portal import app
+from gasp import app
 
 '''
 This will handle authentication for schoology.
