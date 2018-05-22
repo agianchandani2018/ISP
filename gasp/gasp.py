@@ -79,11 +79,13 @@ auth = None #make globally accessible Auth instance
 #authenticates user upon connection
 @app.route('/')
 def index():
-	git_auth()
+	#git_auth()
 	db = get_db()
 	
 	#db.execute('select ')
 	#db.commit()
+	
+	return render_template("create_assignment.html")
 	
 	with open('assignment_student_portal/schoology_api_keys.txt', 'r') as f:
 		cfg = f.readlines()
@@ -163,5 +165,5 @@ def create_assignment(user):
 		return render_template('create_assignment.html') #later: add default fill info
 	
 if __name__=='__main__':
-	app.run(debug=True,host="compsci-dev.pingry.k12.nj.us", port=443)
+	app.run(debug=True,host="compsci-dev.pingry.k12.nj.us", port=80)
 #filezilla ssh protocol
