@@ -87,8 +87,10 @@ def index():
 	
 	return render_template("create_assignment.html")
 	
-	with open('assignment_student_portal/schoology_api_keys.txt', 'r') as f:
-		cfg = f.readlines()
+	#with open('assignment_student_portal/schoology_api_keys.txt', 'r') as f:
+		#cfg = f.readlines()
+	cfg = [raw_input("key") + " ", raw_input("secret")]
+	
 
 	DOMAIN = url_for('finish_auth', _external=True)#app.route
 	
@@ -147,7 +149,7 @@ def user_status_check(user):
 	#else
 	#return render_student.render_student_portal(main.Schoology(auth))
 	#return "made it to " + user
-	pass
+	return render_
 	
 @app.route('/<user>/create', methods=['GET', 'POST'])
 def create_assignment(user):
