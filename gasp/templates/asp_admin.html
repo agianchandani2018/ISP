@@ -1,0 +1,22 @@
+<html>
+<head>
+	<title>Instructor Portal Home</title>
+</head>
+<body>
+	<!--redirect to {currenturl}/create-->
+	<button onclick="myFunction()">Create New Assignment</button><br>
+	
+	<select>
+		<!--more official syntax-->
+		{# for s in admin.assignments #}
+			<option value="{{s.id}}">{{s.title}}</option>
+		{# endfor #}
+	</select>
+	
+	<button onclick="myFunction()">Edit Assignment</button>
+	
+	<button onclick="myFunction()">View Assignment</button>
+	
+	<!--Script tag here?-->
+</body>
+</html>

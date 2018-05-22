@@ -1,0 +1,63 @@
+<html>
+<head>
+	<style>
+	.exp {color:red;font-size:14px;}
+	</style>
+	<!--includes jQuery from Google CDN-->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+	<!--Needed Info
+	deadline info: end deadline, num checkpts, checkpt dates and corresponding commits
+	sharing permissions
+	auto pull request?
+	link to starter code
+	assignment or notes?
+	
+	to do:
+		make min value for date input today's date
+		make settings options for defaults/sharing
+		React?
+		so we'll create a teacher app for this
+		disable pull requests if not assignment
+		default last checkpoint = deadline
+	-->
+	
+	<form id="create"><!-- action="/action_page.php" method="post"-->
+		<fieldset>
+			<legend>Assignment Info</legend>
+			Assignment Title: <input type="text" name="title"><br>
+			Link to Starter Repo on GitHub: <input type="text" name="link"><br>
+			Sharing Permissions: <br>
+				<input type="radio" name="share" value="true" checked> Share with everyone (instructor + TAs)<br>
+				<input type="radio" name="share" value="false"> Share only with me (instructor)<br>
+			Enable Auto Pull Request?* <input type="radio" name="pullreq" value="true"> yes <input type="radio" name="pullreq" value="false" checked> no<br>
+			<div class="exp">*auto pull requests will automatically create a pull request on the deadline date regardless of student submission status</div>
+			Assignment or Notes? <input type="radio" onclick="{enableDeadlines()}" name="note" value="true" checked> Assignment <input type="radio" onclick="{disableDeadlines()}" name="note" value="false"> Notes<br>
+		</fieldset>
+		
+		<br>
+		
+		<fieldset id="deadline">
+			<legend>Deadline Info</legend>
+			<div class="exp">This info will be disregarded if previously designated as "Notes".</div>
+			Final Deadline: <input type="date" name="deadline" min=""><br>
+			Checkpoints <input id="numcheck" type="number" oninput="{changeTable()}"value="1"  min="1" max="10"><br>
+			<div class="exp">*Include deadline as final checkpoint.</div>
+			<div class="exp">*Commit numbers should be cumulative.</div>
+			<table id="checkpoints">
+				<tr>
+					<th>Name (optional)</th><th>Date</th><th>Number of Commits</th>
+					<tr><td><input type="text" id="n0"></td><td><input id="d0" type="date"></td><td><input id="nc0" type="number" min="0"></td></tr>
+				</tr>
+			</table>
+			
+			
+		</fieldset>
+		
+		<br>
+		<input type="submit" value="Create Assignment">
+	</form>
+	<script type="text/javascript" src="../static/form_complete.js"></script>
+</body>
+</html>
