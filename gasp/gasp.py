@@ -85,7 +85,7 @@ def index():
 	#db.execute('select ')
 	#db.commit()
 	
-	return render_template("create_assignment.html")
+	#return render_template("create_assignment.html")
 	
 	#with open('assignment_student_portal/schoology_api_keys.txt', 'r') as f:
 		#cfg = f.readlines()
