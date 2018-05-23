@@ -155,14 +155,14 @@ def user_status_check(user):
 @app.route('/add/<user>')
 def test_add_admin(user):
 	db = get_db()
-	db.execute('insert into admins (schoology_id) values (user)')
+	db.execute('insert into admins (schoology_id) values (?)', user)
 	db.commit()
 	return 'added a new admin ' + user
 	
 @app.route('/addu/<user>')
 def test_add_user(user):
 	db = get_db()
-	db.execute('insert into students (schoology_id) values (user)')
+	db.execute('insert into students (schoology_id) values (?)', user)
 	db.commit()
 	return "added a new student " + user
 	
