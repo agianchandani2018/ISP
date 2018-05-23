@@ -5,12 +5,13 @@ from flask_github import GitHub
 
 import webbrowser as wb
 
-import authenticate, main
+
 
 
 
 app = Flask(__name__)
 
+import authenticate, main
 
 #----------database stuff----------
 
