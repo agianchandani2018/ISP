@@ -184,6 +184,10 @@ def create_assignment(user):
 	else: #request.method == 'GET'
 		return render_template('create_assignment.html', course_list=["per1", "per2"]) #later: add default fill info
 	
+@app.route('/hidden/initdb') #can't find a better way to do this
+def initialize_database():
+	init_db()
+	
 if __name__=='__main__':
 	app.run(debug=True,host="compsci-dev.pingry.k12.nj.us", port=1030)
 #filezilla ssh protocol
