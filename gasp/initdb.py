@@ -1,4 +1,4 @@
-from gasp import app
+import gasp
 
 app.config.update(dict(
 	DATABASE=os.path.join(app.root_path, 'gasp.db'),
