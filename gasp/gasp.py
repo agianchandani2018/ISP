@@ -102,7 +102,7 @@ def index():
 	url = auth.request_authorization()
 	
 	if url is not None:
-		wb.open(url, new=0, True)
+		wb.open(url, new=0, autoraise=True)
 		return "successful url " + url
 	
 	return("bad url " + url)
