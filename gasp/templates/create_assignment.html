@@ -28,6 +28,12 @@
 			<legend>Assignment Info</legend>
 			Assignment Title: <input type="text" name="title"><br>
 			Link to Starter Repo on GitHub: <input type="text" name="link"><br>
+			Course Sections: <select name="courses" size="3" multiple>
+				{% for section in course_list %}
+					<option value="{{section}}">{{section}}</option>
+				{% endfor %}
+			</select><br>
+			<div class="exp">*use ctrl to toggle multiple courses</div>
 			Sharing Permissions: <br>
 				<input type="radio" name="share" value="true" checked> Share with everyone (instructor + TAs)<br>
 				<input type="radio" name="share" value="false"> Share only with me (instructor)<br>

@@ -7,26 +7,12 @@ import webbrowser as wb
 
 import authenticate, main
 
-#host student page
-#make a package
-'''
-To Do
-- obtain data from form
-- create github repos
-- create schoology assignment
-- when requested, respond with student's asp
-Later
-- when requested, modify settings for assignment info
-- database interaction for storing checkpoint info?
-	- store dict for assignment (assignment_info, assignment/notes, deadline_info, starter_repo_link(for updating root), auto_pull_request)
-	- store dict for users (schoology_username, github_username, github_link auth_info?)
-- on deadline, auto pull request
-'''
+
 
 app = Flask(__name__)
 
 
-#database stuff
+#----------database stuff----------
 
 app.config.update(dict(
 	DATABASE=os.path.join(app.root_path, 'gasp.db'),
@@ -69,7 +55,7 @@ def close_db(error):
 		g.sqlite_db.close()
 
 		
-# GitHub Stuff
+#----------GitHub Stuff----------
 app.config['GITHUB_CLIENT_ID'] = 'placeholder' #placeholders
 app.config['GITHUB_CLIENT_SECRET'] = 'yyy'
 
@@ -77,6 +63,9 @@ github = GitHub(app)
 
 
 auth = None #make globally accessible Auth instance
+
+
+#----------View Functions----------
 
 #authenticates user upon connection
 @app.route('/')
@@ -86,8 +75,6 @@ def index():
 	
 	#db.execute('select ')
 	#db.commit()
-	
-	#return render_template("create_assignment.html")
 	
 	#with open('assignment_student_portal/schoology_api_keys.txt', 'r') as f:
 		#cfg = f.readlines()
@@ -148,13 +135,35 @@ def finish_auth():
 @app.route('/<user>')
 def user_status_check(user):
 	#check if user has the necessary tokens for github access
+	db = get_db()
+	
+	ids = db.execute('select schoology_id from admins').fetchall()
+	
+	if str(user) in ids:
+		return "reached admin page for " + user
+	else:
+		return "probably a student " + user
+	
 	
 	#if user is admin
 		#return render_admin_portal()
 	#else
 	#return render_student.render_student_portal(main.Schoology(auth))
-	#return "made it to " + user
-	return "made it to user " + user
+	#return "made it to user " + user
+	
+@app.route('/add/<user>')
+def test_add_admin(user):
+	db = get_db()
+	db.execute('insert into admins (schoology_id) values (user)')
+	db.commit()
+	return 'added a new admin ' + user
+	
+@app.route('/addu/<user>')
+def test_add_user(user):
+	db = get_db()
+	db.execute('insert into students (schoology_id) values (user)')
+	db.commit()
+	return "added a new student " + user
 	
 @app.route('/<user>/create', methods=['GET', 'POST'])
 def create_assignment(user):
@@ -165,11 +174,14 @@ def create_assignment(user):
 		#if create_github. == None:
 			#return ""
 		#create schoology assignment
-		#create_schoology.
-		return "Form submitted successfully."
-		#render a button to return to home page
+		
+		#add assignment to database
+		
+		flash("Form submitted successfully.")
+		return redirect(url_for('user_status_check', user=user))
+
 	else: #request.method == 'GET'
-		return render_template('create_assignment.html') #later: add default fill info
+		return render_template('create_assignment.html', course_list=["per1", "per2"]) #later: add default fill info
 	
 if __name__=='__main__':
 	app.run(debug=True,host="compsci-dev.pingry.k12.nj.us", port=1030)

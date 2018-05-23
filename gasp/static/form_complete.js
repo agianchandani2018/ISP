@@ -22,8 +22,9 @@ form.addEventListener("submit", function(event){
 	window.alert(JSON.stringify(r));
 	//and then we'll send this somewhere
 	
+	//actually we probably don't need this anymore?
 	$.ajax({
-		url: "http://",//put something here, depending on where we're sending it
+		url: "http://compsci-dev.pingry.k12.nj.us/",//put something here, depending on where we're sending it
 		type: 'PUT',
 		data: JSON.stringify(r),
 		contentType: 'application/json',
