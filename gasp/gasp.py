@@ -156,7 +156,8 @@ def user_status_check(user):
 def test_add_admin(user):
 	db = get_db()
 	print(type(user))
-	db.execute('insert into admins (schoology_id) values ?', user)
+	#that's it, we're going into debug mode
+	db.execute(raw_input("SQL: "), user)
 	db.commit()
 	return 'added a new admin ' + user
 	
