@@ -18,7 +18,7 @@ CREATE TABLE assignments (
 
 --admins can create courses
 CREATE TABLE admins (
-	schoology_id INT PRIMARY KEY,
+	schoology_id TEXT PRIMARY KEY,
 	schoology_token TEXT,
 	schoology_secret TEXT,
 	course_sections TEXT,
@@ -31,7 +31,7 @@ CREATE TABLE admins (
 
 --students can access assignments
 CREATE TABLE students (
-	schoology_id INT PRIMARY KEY,
+	schoology_id TEXT PRIMARY KEY,
 	schoology_token TEXT,
 	schoology_secret TEXT,
 	course_sections TEXT,
