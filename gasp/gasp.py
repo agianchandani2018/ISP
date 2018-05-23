@@ -155,14 +155,15 @@ def user_status_check(user):
 @app.route('/add/<user>')
 def test_add_admin(user):
 	db = get_db()
-	db.execute('insert into admins (schoology_id) values (?)', user)
+	print(type(user))
+	db.execute('insert into admins (schoology_id) values ?', user)
 	db.commit()
 	return 'added a new admin ' + user
 	
 @app.route('/addu/<user>')
 def test_add_user(user):
 	db = get_db()
-	db.execute('insert into students (schoology_id) values (?)', user)
+	db.execute('insert into students (schoology_id) select ?', user)
 	db.commit()
 	return "added a new student " + user
 	
@@ -188,6 +189,10 @@ def create_assignment(user):
 def initialize_database():
 	init_db()
 	return "success!"
+	
+@app.route('/hidden/dbcontents')
+def spill_db_contents():
+	return "replace with db contents"
 	
 if __name__=='__main__':
 	app.run(debug=True,host="compsci-dev.pingry.k12.nj.us", port=1030)
