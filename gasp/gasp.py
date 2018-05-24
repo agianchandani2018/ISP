@@ -57,10 +57,14 @@ def close_db(error):
 
 		
 #----------GitHub Stuff----------
-app.config['GITHUB_CLIENT_ID'] = 'placeholder' #placeholders
-app.config['GITHUB_CLIENT_SECRET'] = 'yyy'
+'''
+with open('github_id.txt', 'r') as f:
+	cf = f.readlines()
 
-github = GitHub(app)
+app.config['GITHUB_CLIENT_ID'] = cf[0][:-1]
+app.config['GITHUB_CLIENT_SECRET'] = cf[1]
+'''
+#github = GitHub(app)
 
 
 auth = None #make globally accessible Auth instance
@@ -71,6 +75,14 @@ auth = None #make globally accessible Auth instance
 #authenticates user upon connection
 @app.route('/')
 def index():
+	app.config['GITHUB_CLIENT_ID'] = raw_input("id: ")
+	app.config['GITHUB_CLIENT_SECRET'] = raw_input("secret: ")
+	github=GitHub(app)
+	
+	return id, secret
+	
+
+
 	#git_auth()
 	db = get_db()
 	
@@ -97,7 +109,7 @@ def index():
 	return("bad url " + url)
 	
 #authorizes the user and redirects to the given url
-@app.route('/test')
+@app.route('/github-login')
 def git_auth():
 	return github.authorize(scope="repo", redirect_uri=url_for("finish_auth", _external=True))
 
@@ -131,6 +143,8 @@ def finish_auth():
 	
 	return redirect(url_for('user_status_check', user=main.Schoology(auth).get_me().uid))
 	#at some point we need to store access tokens
+	
+@app.route()
 	
 	
 @app.route('/<user>')
