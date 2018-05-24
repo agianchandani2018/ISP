@@ -57,15 +57,14 @@ def close_db(error):
 
 		
 #----------GitHub Stuff----------
-'''
+
 with open('github_id.txt', 'r') as f:
 	cf = f.readlines()
 
 app.config['GITHUB_CLIENT_ID'] = cf[0][:-1]
 app.config['GITHUB_CLIENT_SECRET'] = cf[1]
-'''
-app.config['GITHUB_CLIENT_ID'] = raw_input("id: ")
-app.config['GITHUB_CLIENT_SECRET'] = raw_input("secret: ")
+
+
 
 github = GitHub(app)
 
@@ -110,7 +109,7 @@ def index():
 #authorizes the user and redirects to the given url
 @app.route('/github-login')
 def git_auth():
-	return github.authorize(scope="repo", redirect_uri=url_for("finish_auth", _external=True))
+	return github.authorize(scope="repo")
 
 @app.route('/github-callback')
 @github.authorized_handler
