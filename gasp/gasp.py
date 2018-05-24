@@ -141,7 +141,8 @@ def user_status_check(user):
 	ids = db.execute('select schoology_id from admins').fetchall()
 	print(ids)
 	print(user)
-	if str(user) in ids:
+	print(len([item for item in ids if user in item])>0)
+	if len([item for item in ids if user in item])>0:
 		return "reached admin page for " + user
 	else:
 		return "probably a student " + user
