@@ -18,23 +18,23 @@ CREATE TABLE assignments (
 
 --admins can create courses
 CREATE TABLE admins (
-	schoology_id TEXT PRIMARY KEY,
-	schoology_token TEXT,
-	schoology_secret TEXT,
-	course_sections TEXT,
-	github_username TEXT,
-	assignments TEXT,
-	github_token TEXT
+	schoology_id VARCHAR(8) PRIMARY KEY,
+	schoology_token VARCHAR(100),
+	schoology_secret VARCHAR(100),
+	course_sections VARCHAR(100),
+	github_username VARCHAR(100),
+	assignments VARCHAR(100),
+	github_token VARCHAR(100)
 );
 
 --is it worth making a table for course sections and filtering assignments that way?
 
 --students can access assignments
 CREATE TABLE students (
-	schoology_id TEXT PRIMARY KEY,
-	schoology_token TEXT,
-	schoology_secret TEXT,
-	course_sections TEXT,
-	github_username TEXT,
-	github_token TEXT
+	schoology_id VARCHAR(8) PRIMARY KEY,
+	schoology_token VARCHAR(100),
+	schoology_secret VARCHAR(100),
+	course_sections VARCHAR(100),
+	github_username VARCHAR(100),
+	github_token VARCHAR(100)
 );

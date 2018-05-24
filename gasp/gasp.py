@@ -157,14 +157,14 @@ def test_add_admin(user):
 	db = get_db()
 	print(type(user))
 	#that's it, we're going into debug mode
-	db.execute(raw_input("SQL: "), user)
+	db.execute("insert into admins (schoology_id) values (?)", user)
 	db.commit()
 	return 'added a new admin ' + user
 	
 @app.route('/addu/<user>')
 def test_add_user(user):
 	db = get_db()
-	db.execute('insert into students (schoology_id) select ?', user)
+	db.execute("insert into students (schoology_id) values (?)", str(user))
 	db.commit()
 	return "added a new student " + user
 	
