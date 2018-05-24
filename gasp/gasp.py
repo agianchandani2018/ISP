@@ -64,7 +64,10 @@ with open('github_id.txt', 'r') as f:
 app.config['GITHUB_CLIENT_ID'] = cf[0][:-1]
 app.config['GITHUB_CLIENT_SECRET'] = cf[1]
 '''
-#github = GitHub(app)
+app.config['GITHUB_CLIENT_ID'] = raw_input("id: ")
+app.config['GITHUB_CLIENT_SECRET'] = raw_input("secret: ")
+
+github = GitHub(app)
 
 
 auth = None #make globally accessible Auth instance
@@ -75,11 +78,7 @@ auth = None #make globally accessible Auth instance
 #authenticates user upon connection
 @app.route('/')
 def index():
-	app.config['GITHUB_CLIENT_ID'] = raw_input("id: ")
-	app.config['GITHUB_CLIENT_SECRET'] = raw_input("secret: ")
-	github=GitHub(app)
 	
-	return id, secret
 	
 
 
