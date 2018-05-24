@@ -139,7 +139,8 @@ def user_status_check(user):
 	db = get_db()
 	
 	ids = db.execute('select schoology_id from admins').fetchall()
-	
+	print(ids)
+	print(user)
 	if str(user) in ids:
 		return "reached admin page for " + user
 	else:
@@ -155,8 +156,6 @@ def user_status_check(user):
 @app.route('/add/<user>')
 def test_add_admin(user):
 	db = get_db()
-	print(type(user))
-	#that's it, we're going into debug mode
 	db.execute("insert into admins (schoology_id) values (?)", [user])
 	db.commit()
 	return 'added a new admin ' + user
