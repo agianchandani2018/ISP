@@ -143,7 +143,6 @@ def finish_auth():
 	return redirect(url_for('user_status_check', user=main.Schoology(auth).get_me().uid))
 	#at some point we need to store access tokens
 	
-@app.route()
 	
 	
 @app.route('/<user>')
