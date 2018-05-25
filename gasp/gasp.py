@@ -58,6 +58,8 @@ def close_db(error):
 		
 #----------GitHub Stuff----------
 
+app.config['SECRET_KEY'] = b'_5#y2L"F4Q8z\n\xec]/' #random key to change later
+
 with open('github_id.txt', 'r') as f:
 	cf = f.readlines()
 
@@ -204,7 +206,15 @@ def initialize_database():
 	
 @app.route('/hidden/dbcontents')
 def spill_db_contents():
-	return "replace with db contents"
+	db = get_db()
+	
+	ad = db.execute('select schoology_id from admins').fetchall())
+	stu = db.execute('select schoology_id from students'.fetchall())
+	print("admins: ")
+	print(ad)
+	print("students: ")
+	print(stu)
+	return "see console for user info"
 	
 if __name__=='__main__':
 	app.run(debug=True,host="compsci-dev.pingry.k12.nj.us", port=1030)
