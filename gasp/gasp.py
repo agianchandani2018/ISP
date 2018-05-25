@@ -29,7 +29,7 @@ def connect_db():
 	rv = sqlite3.connect(app.config['DATABASE'])
 	rv.row_factory = sqlite3.Row
 	return rv
-	
+
 #initializes the database
 def init_db():
 	db = get_db()
@@ -42,20 +42,20 @@ def init_db():
 def initdb_command():
 	init_db()
 	print('initialized the database.')
-	
+
 #opens new database connection if there is none yet for current application context
 def get_db():
 	if not hasattr(g, 'sqlite_db'):
 		g.sqlite_db = connect_db()
 	return g.sqlite_db
-	
+
 #closes database again at thee end of the request
 @app.teardown_appcontext
 def close_db(error):
 	if hasattr(g, 'sqlite_db'):
 		g.sqlite_db.close()
 
-		
+
 #----------GitHub Stuff----------
 
 app.config['SECRET_KEY'] = b'_5#y2L"F4Q8z\n\xec]/' #random key to change later
@@ -79,40 +79,43 @@ auth = None #make globally accessible Auth instance
 #authenticates user upon connection
 @app.route('/')
 def index():
-	
-	
+
+
 
 
 	#git_auth()
 	db = get_db()
-	
+
 	#db.execute('select ')
 	#db.commit()
-	
+
 	#with open('assignment_student_portal/schoology_api_keys.txt', 'r') as f:
 		#cfg = f.readlines()
 	cfg = [raw_input("key") + " ", raw_input("secret")]
-	
+
 	print(cfg)
 
 	DOMAIN = url_for('finish_auth', _external=True)#app.route
-	
+
 	global auth
 	auth = authenticate.Auth(cfg[0][:-1], cfg[1], domain=DOMAIN, three_legged=True)
 	url = auth.request_authorization()
-	
+
 	if url is not None:
 		#wb.open(url, new=0, autoraise=True)
 		#return "successful url " + url
 		return redirect(url)
-	
+
 	return("bad url " + url)
-	
+
 #authorizes the user and redirects to the given url
 @app.route('/github-login')
 def git_auth():
 	return github.authorize(scope="repo")
 
+'''Decorator for the route that is used as the callback for authorizing with
+   GitHub. This callback URL can be set in the settings for the app or passed
+   in during authorization.'''
 @app.route('/github-callback')
 @github.authorized_handler
 def authorized(oauth_token):
@@ -128,29 +131,31 @@ def authorized(oauth_token):
 	db_session.commit()
 	return redirect(next_url)
 
+'''Registers a function as the access_token getter. Must return the access_token
+   used to make requests to GitHub on the user’s behalf.'''
 @github.access_token_getter
 def token_getter():
 	user = g.user
 	if user is not None:
 		return user.github_access_token
-	
-	
+
+
 @app.route('/auth')
 def finish_auth():
 	global auth
-	if not auth.authorize(): 
+	if not auth.authorize():
 		raise SystemExit('account was not authorized.')
-	
+
 	return redirect(url_for('user_status_check', user=main.Schoology(auth).get_me().uid))
 	#at some point we need to store access tokens
-	
-	
-	
+
+
+
 @app.route('/<user>')
 def user_status_check(user):
 	#check if user has the necessary tokens for github access
 	db = get_db()
-	
+
 	ids = db.execute('select schoology_id from admins').fetchall()
 	print(ids)
 	print(user)
@@ -159,28 +164,28 @@ def user_status_check(user):
 		return "reached admin page for " + user
 	else:
 		return "probably a student " + user
-	
-	
+
+
 	#if user is admin
 		#return render_admin_portal()
 	#else
 	#return render_student.render_student_portal(main.Schoology(auth))
 	#return "made it to user " + user
-	
+
 @app.route('/add/<user>')
 def test_add_admin(user):
 	db = get_db()
 	db.execute("insert into admins (schoology_id) values (?)", [user])
 	db.commit()
 	return 'added a new admin ' + user
-	
+
 @app.route('/addu/<user>')
 def test_add_user(user):
 	db = get_db()
 	db.execute("insert into students (schoology_id) values (?)", (user,))
 	db.commit()
 	return "added a new student " + user
-	
+
 @app.route('/<user>/create', methods=['GET', 'POST'])
 def create_assignment(user):
 	if request.method == 'POST':
@@ -190,24 +195,24 @@ def create_assignment(user):
 		#if create_github. == None:
 			#return ""
 		#create schoology assignment
-		
+
 		#add assignment to database
-		
+
 		flash("Form submitted successfully.")
 		return redirect(url_for('user_status_check', user=user))
 
 	else: #request.method == 'GET'
 		return render_template('create_assignment.html', course_list=["per1", "per2"]) #later: add default fill info
-	
+
 @app.route('/hidden/initdb') #can't find a better way to do this
 def initialize_database():
 	init_db()
 	return "success!"
-	
+
 @app.route('/hidden/dbcontents')
 def spill_db_contents():
 	db = get_db()
-	
+
 	ad = db.execute('select schoology_id from admins').fetchall())
 	stu = db.execute('select schoology_id from students'.fetchall())
 	print("admins: ")
@@ -215,7 +220,7 @@ def spill_db_contents():
 	print("students: ")
 	print(stu)
 	return "see console for user info"
-	
+
 if __name__=='__main__':
 	app.run(debug=True,host="compsci-dev.pingry.k12.nj.us", port=1030)
 #filezilla ssh protocol
