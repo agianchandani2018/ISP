@@ -1,7 +1,7 @@
 import os
 from flask import Flask, request, redirect, url_for, render_template, session, g, flash
 from sqlite3 import dbapi2 as sqlite3
-from flask_github import GitHub
+#from flask_github import GitHub
 
 import webbrowser as wb
 
@@ -12,6 +12,7 @@ import webbrowser as wb
 app = Flask(__name__)
 
 import authenticate, main
+from flask_github import GitHub
 
 #----------database stuff----------
 
@@ -63,7 +64,8 @@ app.config['SECRET_KEY'] = b'_5#y2L"F4Q8z\n\xec]/' #random key to change later
 with open('github_id.txt', 'r') as f:
 	cf = f.readlines()
 
-app.config['GITHUB_CLIENT_ID'] = cf[0][:-1]
+app.config['GITHUB_CLIENT_ID'] = cf[0][:-2]
+print(cf[0][:-1])
 app.config['GITHUB_CLIENT_SECRET'] = cf[1]
 
 
@@ -79,9 +81,6 @@ auth = None #make globally accessible Auth instance
 #authenticates user upon connection
 @app.route('/')
 def index():
-	
-	
-
 
 	#git_auth()
 	db = get_db()
@@ -111,26 +110,38 @@ def index():
 #authorizes the user and redirects to the given url
 @app.route('/github-login')
 def git_auth():
+	print("starting login")
+	
 	return github.authorize(scope="repo")
 
 @app.route('/github-callback')
 @github.authorized_handler
 def authorized(oauth_token):
-	next_url = request.args.get('next') or url_for('index')
+	next_url = url_for("did_this_auth", token="")
+	#next_url = request.args.get('next') or url_for('index')
 	if oauth_token is None:
-		flash("authorization failed.")
+		print("authorization failed.")
 		return redirect(next_url)
-	user = User.query.filter_by(github_access_token=oauth_token).first()
-	if user is None:
-		user = User(oauth_token)
-		db_session.add(user)
-	user.github_access_token = oauth_token
-	db_session.commit()
+	#user = User.query.filter_by(github_access_token=oauth_token).first()
+	#if user is None:
+		#user = User(oauth_token)
+		#db_session.add(user)
+	#user.github_access_token = oauth_token
+	#db_session.commit()
+	db = get_db()
+	print("success")
+	
 	return redirect(next_url)
 
+@app.route('/test-auth')
+def did_this_auth():
+	return "auth complete"
+	
+	
 @github.access_token_getter
 def token_getter():
 	user = g.user
+	print("getting token")
 	if user is not None:
 		return user.github_access_token
 	
@@ -208,8 +219,8 @@ def initialize_database():
 def spill_db_contents():
 	db = get_db()
 	
-	ad = db.execute('select schoology_id from admins').fetchall())
-	stu = db.execute('select schoology_id from students'.fetchall())
+	ad = db.execute('select schoology_id from admins').fetchall()
+	stu = db.execute('select schoology_id from students').fetchall()
 	print("admins: ")
 	print(ad)
 	print("students: ")
