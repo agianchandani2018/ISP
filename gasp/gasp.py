@@ -68,8 +68,6 @@ app.config['GITHUB_CLIENT_ID'] = cf[0][:-2]
 print(cf[0][:-1])
 app.config['GITHUB_CLIENT_SECRET'] = cf[1]
 
-
-
 github = GitHub(app)
 
 
@@ -83,34 +81,33 @@ auth = None #make globally accessible Auth instance
 def index():
 	#git_auth()
 	db = get_db()
-
+	
 	#db.execute('select ')
 	#db.commit()
 
-	#with open('assignment_student_portal/schoology_api_keys.txt', 'r') as f:
-		#cfg = f.readlines()
-	cfg = [raw_input("key") + " ", raw_input("secret")]
-
+	with open('schoology_api_keys.txt', 'r') as f:
+		cfg = f.readlines()
+	#cfg = [raw_input("key") + " ", raw_input("secret")]
 	print(cfg)
 
-	DOMAIN = url_for('finish_auth', _external=True)#app.route
+	#redirect url
+	DOMAIN = url_for('finish_auth', _external=True)
 
 	global auth
-	auth = authenticate.Auth(cfg[0][:-1], cfg[1], domain=DOMAIN, three_legged=True)
+	#print cfg[0][:-2] + " " + cfg[1] + "."
+
+	auth = authenticate.Auth(cfg[0][:-2], cfg[1], domain=DOMAIN, three_legged=True)
 	url = auth.request_authorization()
 
 	if url is not None:
-		#wb.open(url, new=0, autoraise=True)
-		#return "successful url " + url
 		return redirect(url)
 
 	return("bad url " + url)
+	
 
 #authorizes the user and redirects to the given url
 @app.route('/github-login')
 def git_auth():
-	print("starting login")
-	
 	return github.authorize(scope="repo")
 
 '''Decorator for the route that is used as the callback for authorizing with
@@ -140,8 +137,6 @@ def did_this_auth():
 	return "auth complete"
 	
 
-'''Registers a function as the access_token getter. Must return the access_token
-   used to make requests to GitHub on the user’s behalf.'''
 @github.access_token_getter
 def token_getter():
 	user = g.user
@@ -156,6 +151,8 @@ def finish_auth():
 	if not auth.authorize():
 		raise SystemExit('account was not authorized.')
 
+	#temporary but for now we'll redirect every time
+	return redirect(url_for('git_auth'))
 	return redirect(url_for('user_status_check', user=main.Schoology(auth).get_me().uid))
 	#at some point we need to store access tokens
 
