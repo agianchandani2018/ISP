@@ -130,7 +130,11 @@ def authorized(oauth_token):
 	db = get_db()
 	print("success")
 	
-	return redirect(next_url)
+	user = main.Schoology(auth).get_me()
+	
+	db.execute('insert into students (schoology_id, course_sections, github_username, github_token) values (?, ?, ?, ?)', (user.uid, "placeholder,placeholder", "placeholder_username", "placeholder_token"))#work on course sections later i guess
+	db.commit()
+	return redirect(url_for("user_status_check", user=main.Schoology(auth).get_me().uid))
 
 @app.route('/test-auth')
 def did_this_auth():
@@ -168,7 +172,8 @@ def user_status_check(user):
 	print(user)
 	print(len([item for item in ids if user in item])>0)
 	if len([item for item in ids if user in item])>0:
-		return "reached admin page for " + user
+		#return "reached admin page for " + user
+		return render_template('asp_admin.html', currenturl=url_for('user_status_check', user=user))#add kwargs
 	else:
 		return "probably a student " + user
 
@@ -221,7 +226,7 @@ def spill_db_contents():
 	db = get_db()
 
 	
-	ad = db.execute('select schoology_id from admins').fetchall()
+	ad = db.execute('select (schoology_id, github_username) from admins').fetchall()
 	stu = db.execute('select schoology_id from students').fetchall()
 
 	print("admins: ")
