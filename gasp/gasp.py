@@ -81,7 +81,7 @@ auth = None #make globally accessible Auth instance
 def index():
 	#git_auth()
 	db = get_db()
-	
+
 	#db.execute('select ')
 	#db.commit()
 
@@ -103,7 +103,7 @@ def index():
 		return redirect(url)
 
 	return("bad url " + url)
-	
+
 
 #authorizes the user and redirects to the given url
 @app.route('/github-login')
@@ -129,9 +129,9 @@ def authorized(oauth_token):
 	#db_session.commit()
 	db = get_db()
 	print("success")
-	
+
 	user = main.Schoology(auth).get_me()
-	
+
 	db.execute('insert into students (schoology_id, course_sections, github_username, github_token) values (?, ?, ?, ?)', (user.uid, "placeholder,placeholder", "placeholder_username", "placeholder_token"))#work on course sections later i guess
 	db.commit()
 	return redirect(url_for("user_status_check", user=main.Schoology(auth).get_me().uid))
@@ -139,7 +139,7 @@ def authorized(oauth_token):
 @app.route('/test-auth')
 def did_this_auth():
 	return "auth complete"
-	
+
 
 @github.access_token_getter
 def token_getter():
@@ -209,6 +209,8 @@ def create_assignment(user):
 		#create schoology assignment
 
 		#add assignment to database
+		print request.form
+		print request.data
 
 		flash("Form submitted successfully.")
 		return redirect(url_for('user_status_check', user=user))
@@ -225,8 +227,8 @@ def initialize_database():
 def spill_db_contents():
 	db = get_db()
 
-	
-	ad = db.execute('select (schoology_id, github_username) from admins').fetchall()
+
+	ad = db.execute('select schoology_id, github_username from admins').fetchall()
 	stu = db.execute('select schoology_id from students').fetchall()
 
 	print("admins: ")

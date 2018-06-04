@@ -1768,6 +1768,9 @@ class Schoology:
         self._delete('sections/%s/grading_groups/%s' % (section_id, group_id))
 
 
+    def create_assignment(self, section_id, assignment):
+        return Assignment(self._post('sections/%s/assignments' % section_id, assignment))
+
     def get_assignments(self, section_id):
         return [Assignment(raw) for raw in self._get('sections/%s/assignments' % section_id)['assignment']]
 

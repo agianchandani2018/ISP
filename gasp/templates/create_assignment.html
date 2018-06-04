@@ -13,7 +13,7 @@
 	auto pull request?
 	link to starter code
 	assignment or notes?
-	
+
 	to do:
 		make min value for date input today's date
 		make settings options for defaults/sharing
@@ -22,8 +22,8 @@
 		disable pull requests if not assignment
 		default last checkpoint = deadline
 	-->
-	
-	<form id="create"><!-- action="/action_page.php" method="post"-->
+
+	<form id="create" action="" method="post">
 		<fieldset>
 			<legend>Assignment Info</legend>
 			Assignment Title: <input type="text" name="title"><br>
@@ -41,9 +41,9 @@
 			<div class="exp">*auto pull requests will automatically create a pull request on the deadline date regardless of student submission status</div>
 			Assignment or Notes? <input type="radio" onclick="{enableDeadlines()}" name="note" value="true" checked> Assignment <input type="radio" onclick="{disableDeadlines()}" name="note" value="false"> Notes<br>
 		</fieldset>
-		
+
 		<br>
-		
+
 		<fieldset id="deadline">
 			<legend>Deadline Info</legend>
 			<div class="exp">This info will be disregarded if previously designated as "Notes".</div>
@@ -57,10 +57,10 @@
 					<tr><td><input type="text" id="n0"></td><td><input id="d0" type="date"></td><td><input id="nc0" type="number" min="0"></td></tr>
 				</tr>
 			</table>
-			
-			
+
+
 		</fieldset>
-		
+
 		<br>
 		<input type="submit" value="Create Assignment">
 	</form>
